@@ -1,16 +1,33 @@
-# 샘플 Python 스크립트입니다.
+import sys
 
-# Shift+F10을(를) 눌러 실행하거나 내 코드로 바꿉니다.
-# 클래스, 파일, 도구 창, 액션 및 설정을 어디서나 검색하려면 Shift 두 번을(를) 누릅니다.
-
-
-def print_hi(name):
-    # 스크립트를 디버그하려면 하단 코드 줄의 중단점을 사용합니다.
-    print(f'Hi, {name}')  # 중단점을 전환하려면 Ctrl+F8을(를) 누릅니다.
+sys.setrecursionlimit(10000)
+n = int(input())
 
 
-# 스크립트를 실행하려면 여백의 녹색 버튼을 누릅니다.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def dfs(nx, ny):
+    if nx <= -1 or ny <= -1 or nx >= N or ny >= M:
+        return False
+    if grape[nx][ny] == 1:
+        grape[nx][ny] = 0
+        # 상 하 좌 우
+        dfs(nx - 1, ny)
+        dfs(nx + 1, ny)
+        dfs(nx, ny - 1)
+        dfs(nx, ny + 1)
+        return True
+    return False
 
-# https://www.jetbrains.com/help/pycharm/에서 PyCharm 도움말 참조
+
+for _ in range(n):
+    M, N, K = map(int, input().split())
+    grape = [[0] * M for _ in range(N)]
+    result = 0
+    for i in range(K):
+        x, y = map(int, input().split())
+        grape[y][x] = 1
+
+    for col in range(N):
+        for row in range(M):
+            if dfs(col, row):
+                result += 1
+    print(result)
