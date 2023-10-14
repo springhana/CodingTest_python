@@ -1,23 +1,12 @@
-n, m = map(int, input().split())
+n = int(input())
 array = list(map(int, input().split()))
+array.reverse()
 
+dp = [1] * n
 
-def binary_search(start, end):
-    result = 0
-    while start <= end:
-        total = 0
-        mid = (start + end) // 2
+for i in range(1, n):
+    for j in range(0, i):
+        if array[i] > array[j]:
+            dp[i] = max(dp[i], dp[j] + 1)
 
-        for x in array:
-            if x > mid:
-                total += x - mid
-
-        if total < m:
-            end = mid - 1
-        else:
-            result = mid
-            start = mid + 1
-    return result
-
-
-print(binary_search(0, max(array)))
+print(n - max(dp))
